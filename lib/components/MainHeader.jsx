@@ -13,19 +13,6 @@ MainHeader = React.createClass({
 
   render() {
 
-    let loginButton;
-    let { currentUser } = this.data;
-
-    if (currentUser) {
-      loginButton = (
-        <li><a href="#" onClick={ this.logout }>Logout</a></li>
-      )
-    } else {
-      loginButton = (
-        <li><a href="/login">Login</a></li>
-      )
-    }
-
     return (
       <nav className="navbar navbar-default">
         <div className="container-fluid">
@@ -44,8 +31,7 @@ MainHeader = React.createClass({
               <li>
                 <a href="#">Admin</a>
               </li>
-
-              { loginButton }
+              
             </ul>
           </div>
 

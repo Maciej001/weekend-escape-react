@@ -5,12 +5,7 @@ FlowRouter.route('/',{
   }
 });
 
-FlowRouter.route("/login", {
-  name: "Login",
-  action(params) {
-    ReactLayout.render(MainLayout, { header: <MainHeader />, component: <UserLogin /> })
-  }
-});
+
 
 
 
