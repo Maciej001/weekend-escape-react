@@ -7,8 +7,4 @@ Meteor.startup(() => {
     });
   }
 
-  if (Cities.find().count() === 0) {
-    Meteor.call("populateCities");
-  }
-
 });

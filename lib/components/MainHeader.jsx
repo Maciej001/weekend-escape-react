@@ -27,7 +27,7 @@ MainHeader = React.createClass({
               <ul className="nav navbar-nav navbar-right">
                 <li><a href="/cities">Cities</a></li>
                 <li>
-                  <a href="#">Admin</a>
+                  <a href="/admin">Admin</a>
                 </li>
               </ul>
             </div>

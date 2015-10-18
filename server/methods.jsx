@@ -43,7 +43,10 @@ const cities_array =
 
 Meteor.methods({
 
-  populateCities() {
+  generateCities() {
+    
+    Cities.remove({});
+
     _.each(cities_array, (city) => {
       Cities.insert({
         cityCode:     city._id,

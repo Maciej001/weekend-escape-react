@@ -12,6 +12,16 @@ FlowRouter.route('/main',{
   }
 });
 
+FlowRouter.route('/admin',{
+  name: 'Admin', 
+  action(params) {
+    ReactLayout.render(MainLayout, { 
+      header: <MainHeader />,
+      content: <AdminPanel />
+    })
+  }
+});
+
 FlowRouter.route("/cities", {
   name: "cities-list",
   action(params) {
