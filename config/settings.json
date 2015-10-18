@@ -1,1 +1,9 @@
-ala ma kota 2
+{
+  "public": {
+  },
+  "private": {
+    "GOOGLE_FLIGHTS_KEY": "AIzaSyBQSe8yqt56ijDmwCZUHcaBr6ZXpbU1xuY",
+    "WEATHER_KEY": "1ddad8348cfb3c7a1eeff75bf38b1592",
+    "EXPEDIA_KEY": "na09CCPYUplbph3ry15AJQk4SuNGFYoc"
+  }
+}

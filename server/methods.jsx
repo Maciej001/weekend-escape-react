@@ -63,4 +63,12 @@ Meteor.methods({
     });
   },
 
+  downloadCurrentWeather() {
+
+  },
+
+  downloadForecast() {
+    
+  }
+
 });
