@@ -1,6 +1,8 @@
-// Arguments:
-// title: Chart's title
-// headers: array of headers objects: [ { name: "...", dataName: "..."}, {...}]
+// Table Component
+// args: 
+//   title: Chart's title
+//   headers: array of headers objects: [ { name: "...", dataName: "..."}, {...}]
+//   rows: array of rows, each row is and array containing values
 
 Table = React.createClass({
   
@@ -13,23 +15,21 @@ Table = React.createClass({
     });
 
     return (
-      <tr>
+      <tr className="active">
         { headerNodes }
       </tr>
     )
   },
 
   renderRows() {
-    let rows = this.props.rows.map( (row) => {
+    let tableRows = this.props.rows.map( (row) => {
       return (
         <TableRow row={ row } />
       )
     });
 
     return (
-      <tr>
-        { rows }
-      </tr>
+      { tableRows }
     )
   },
 

@@ -1,43 +1,71 @@
 CitiesList = React.createClass({
-  propTypes: {},
-  mixins: [
+  
+  mixins: [ReactMeteorData],
+  
+  getMeteorData() {
+    let data = {};
+    let subscription = Meteor.subscribe('cities');
 
-  ],
+    if (subscription.ready()){
+      data.cities = Cities.find().fetch();
+    }
 
-  getInitialState() {
-    return {}
+    return data;
   },
 
-  getMeteorData() {
-    //  return {
-    //    currentUser: Meteor.user()
-    //  }
+  getHeaders() {
+    return [
+    {
+      name: "Code",
+      dataName: "cityCode"
+    },
+    {
+      name: "City",
+      dataName: "name"
+    },
+    {
+      name: "Country",
+      dataName: "countryCode"
+    },
+    {
+      name: "Latitude",
+      dataName: "coord.lat"
+    },
+    {
+      name: "Longitude",
+      dataName: "coord.lng"
+    },
+    {
+      name: "Airport",
+      dataName: "airportCode"
+    },
+
+    ]
+  },
+
+  getCitiesRows(){
+    return this.data.cities.map((city) => {
+      let cityRowArray = [];
+      
+      cityRowArray[0] = city.cityCode;
+      cityRowArray[1] = city.name;
+      cityRowArray[2] = city.countryCode;
+      cityRowArray[3] = city.coord.lat;
+      cityRowArray[4] = city.coord.lng;
+      cityRowArray[5] = city.airportCode;
+      
+      return cityRowArray;
+    });
   },
 
   render() {
-    const citiesHeaders = [
-      {
-        name: "City",
-        dataName: "cityName" 
-      },
-      {
-        name: "Country",
-        dataName: "country"
-      },
-      {
-        name: "IATA code",
-        dataName: "IATACode"
-      }
-    ];
-
-    const citiesRows = [
-      ["Warsaw", "Poland", "WAW"],
-      ["London", "UK", "LON"]
-    ];
 
     return (
       <div className="container">
-        <Table title="Cities List" headers={ citiesHeaders } rows={ citiesRows }/>
+        { this.data.cities ?
+          <Table title="Cities List" headers={ this.getHeaders() } rows={ this.getCitiesRows() }/> 
+          : <p>Loading ... </p>
+        }
       </div>
     )
   }

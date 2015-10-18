@@ -1,3 +1,7 @@
+// Table Row Component
+// args: 
+//   row: array[value, value, ...]
+
 TableRow = React.createClass({
 
   render() {

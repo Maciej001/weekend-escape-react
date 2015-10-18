@@ -1,6 +1,6 @@
-
-// TableCell arguments: 
-// value: value of the cell
+// Table Cell Component 
+// args: 
+//   value: value to be displayed
 
 TableCell = React.createClass({
   render() {
