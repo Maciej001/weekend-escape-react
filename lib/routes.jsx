@@ -1,4 +1,11 @@
 FlowRouter.route('/',{
+  name: 'Start', 
+  action(params) {
+    ReactLayout.render(StartLayout);
+  }
+});
+
+FlowRouter.route('/main',{
   name: 'Home', 
   action(params) {
     ReactLayout.render(MainLayout, { header: <MainHeader /> });
