@@ -5,6 +5,17 @@ FlowRouter.route('/',{
   }
 });
 
+FlowRouter.route("/cities", {
+  name: "cities-list",
+  action(params) {
+    ReactLayout.render(MainLayout, { 
+      header: <MainHeader />,
+      content: <CitiesList />
+    })
+  }
+});
+
+
 
 
 

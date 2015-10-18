@@ -4,7 +4,7 @@
       return (
         <div>
           {this.props.header}
-          {this.props.component}
+          {this.props.content}
         </div>
       )
     }
