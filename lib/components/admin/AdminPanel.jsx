@@ -19,6 +19,21 @@ AdminPanel = React.createClass({
     Meteor.call("generateCities");
   }, 
 
+  downloadWeather(e) {
+    e.preventDefault();
+    Meteor.call("downloadCurrentWeather");
+  },
+
+  printWeather(e) {
+    e.preventDefault();
+    console.log(Forecasts.findOne());
+  },
+
+  downloadForecast(e){
+    e.preventDefault();
+    Meteor.call("downloadForecast");
+  },
+
   render() {
     return (
       <div className="container">
@@ -29,8 +44,7 @@ AdminPanel = React.createClass({
             
             <div className="admin-row">
               <h4>Generate List of Cities</h4>
-              <button 
-                id="generate-cities" 
+              <button id="generate-cities" 
                 className="btn btn-primary" 
                 onClick={ this.generateCities }>
 
@@ -40,8 +54,17 @@ AdminPanel = React.createClass({
 
             <div className="admin-row">
               <h4>Download Weather</h4>
-              <button id="download-weather" className="btn btn-primary">Download</button>
+              <button id="download-weather"
+                 className="btn btn-primary"
+                 onClick={ this.downloadWeather } >Download</button>
             </div>  
+
+            <div className="admin-row">
+              <h4>Download 16 day forecast</h4>
+              <button id="download-forecast"
+                 className="btn btn-primary"
+                 onClick={ this.downloadForecast }> Download</button>
+            </div> 
 
             <div className="admin-row">
               <h4 className="header-warning">Find flights (carefull it can cost money :) ) </h4>
@@ -55,7 +78,7 @@ AdminPanel = React.createClass({
 
             <div className="admin-row">
               <h4>Find Hotels</h4>
-              <button id="download-hotels" className="btn btn-primary">Find</button>
+              <button id="download-hotels" className="btn btn-primary" onClick={this.printWeather}>Find</button>
             </div>
 
             <div className="admin-row">

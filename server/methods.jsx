@@ -63,12 +63,144 @@ Meteor.methods({
     });
   },
 
-  downloadCurrentWeather() {
+  downloadCurrentWeather: function() {
+    CurrentWeathers.remove({});
+
+    let cities = Cities.find();
+    let weatherURL = "http://api.openweathermap.org/data/2.5/group?id=";
+
+    // Create API call URL
+    cities.forEach((city) => {
+        weatherURL += city.cityCode + ",";
+    });
+
+    weatherURL = weatherURL.substring(0, weatherURL.length - 1); // remove last ','
+    weatherURL += "&units=metric&APPID=" + WEATHER_KEY;
+    
+     var  weather = [],
+          myForecast = {};
+
+    HTTP.get(weatherURL, function(err, results){
+        _.each(results.data.list, function(city_weather){
+          
+            var icon = "",
+                weather_type = 3;
+
+            switch(city_weather.weather[0].icon) {
+                case "01d":
+                case "01n":
+                    icon = "day-sunny";
+                    weather_type = 5;
+                    break;
+                case "02d":
+                case "02n":
+                    icon = "wi wi-day-cloudy";
+                    weather_type = 5;
+                    break;
+                case "03d":
+                case "03n":
+                    icon = "wi wi-cloud";
+                    weather_type = 4;
+                    break;
+                case "04d":
+                case "04n":
+                    icon = "wi wi-cloudy";
+                    weather_type = 3
+                    break;
+                case "09d":
+                case "09n":
+                case "10d":
+                case "10n":
+                    icon = "wi wi-rain";
+                    weather_type = 2;
+                    break;
+                case "11d":
+                case "11n":
+                    icon = "wi wi-thunderstorm";
+                    weather_type = 2;
+                    break;
+                case "13d":
+                case "13n":
+                    icon = "wi wi-snow";
+                    weather_type = 1;
+                    break;
+                case "50d":
+                case "50n":
+                    icon = "wi wi-fog";
+                    weather_type = 3;
+                    break;
+                default: 
+                    icon = "";
+                    break;
+            };
+
+            // find City._id
+            var city = Cities.findOne({cityCode: city_weather.id});
+
+            CurrentWeathers.insert({
+                cityCode:               city_weather.id,
+                city:                   city_weather.name,
+                temp:                   city_weather.main.temp,
+                temp_min:               city_weather.main.temp_min,
+                temp_max:               city_weather.main.temp_max,
+                humidity:               city_weather.main.humidity,
+                pressure:               city_weather.main.pressure,
+                wind:                   city_weather.wind.speed,
+                wind_deg:               city_weather.wind.deg,
+                clouds:                 city_weather.clouds.all,
+                sunrise:                city_weather.sys.sunrise,
+                sunset:                 city_weather.sys.sunset,
+                weatherMain:            city_weather.weather[0].main,
+                weatherDescription:     city_weather.weather[0].description,
+                weatherIcon:            icon,
+                weatherType:            weather_type
+            });
+
+        });
+    });
 
   },
 
   downloadForecast() {
-    
-  }
+    Forecasts.remove({});
+
+    let cities = Cities.find();
+    let forecastURL = "http://api.openweathermap.org/data/2.5/forecast?id=";
+
+        forecastURL += "6359304" + "&units=metric&appid=" + WEATHER_KEY;
+
+        HTTP.get(forecastURL, function(err, results) {
+            if (err) throw new Meteor.Error(err);
+
+            let forecasts = [];
+
+            _.each(results.data.list, (forecast) => {
+                forecasts.push({
+                    timeDate:               new Date(forecast.dt_txt),
+                    temp:                   forecast.main.temp,
+                    temp_min:               forecast.main.temp_min,
+                    temp_max:               forecast.main.temp_max,
+                    pressure:               forecast.main.pressure,
+                    humidity:               forecast.main.humidity,
+                    weatherId:              forecast.weather.id,
+                    weatherMain:            forecast.weather.main,
+                    weatherDescription:     forecast.weather.description,
+                    clouds:                 forecast.clouds.all,
+                    wind:                   { speed: forecast.wind.speed, deg: forecast.wind.deg },
+                    rain:                   forecast.rain ? forecast.rain : {},
+                    snow:                   forecast.snow ? forecast.snow : {}
+                });
+            });
+
+            Forecasts.insert({
+                cityCode:   results.data.city.id,
+                city:       results.data.city.name,
+                list:       forecasts
+            });
+
+
+        });
+
+  },
 
 });

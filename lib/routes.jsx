@@ -14,6 +14,9 @@ FlowRouter.route('/main',{
 
 FlowRouter.route('/admin',{
   name: 'Admin', 
+  subscriptions: function(params) {
+    this.register("forecasts", Meteor.subscribe("forecasts"))
+  },
   action(params) {
     ReactLayout.render(MainLayout, { 
       header: <MainHeader />,
