@@ -17,14 +17,12 @@ es5-shim                # ECMAScript 5 compatibility for older browsers.
 ecmascript              # Enable ECMAScript2015+ syntax in app code
 
 insecure                # Allow all DB writes from clients (for prototyping)
-kadira:flow-router
+twbs:bootstrap
 fourseven:scss
-rcy:nouislider
 momentjs:moment
-russ:weather-icons
 sacha:spin
 react
+kadira:flow-router
 kadira:react-layout
-firfi:meteor-react-bootstrap
-accounts-password
 http
+accounts-password

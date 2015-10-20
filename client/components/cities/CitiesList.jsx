@@ -39,6 +39,10 @@ CitiesList = React.createClass({
       name: "Airport",
       dataName: "airportCode"
     },
+    {
+      name: "Action",
+      dataName: ""
+    }
 
     ]
   },
@@ -46,6 +50,7 @@ CitiesList = React.createClass({
   getCitiesRows(){
     return this.data.cities.map((city) => {
       let cityRowArray = [];
+      let cityRoute = "/cities/" + city._id;
       
       cityRowArray[0] = city.cityCode;
       cityRowArray[1] = city.name;
@@ -53,6 +58,7 @@ CitiesList = React.createClass({
       cityRowArray[3] = city.coord.lat;
       cityRowArray[4] = city.coord.lng;
       cityRowArray[5] = city.airportCode;
+      cityRowArray[6] = <RedirectButton cityRoute={cityRoute} text="Visit" />
       
       return cityRowArray;
     });

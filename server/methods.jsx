@@ -138,6 +138,7 @@ Meteor.methods({
             var city = Cities.findOne({cityCode: city_weather.id});
 
             CurrentWeathers.insert({
+                cityId:                 city._id,
                 cityCode:               city_weather.id,
                 city:                   city_weather.name,
                 temp:                   city_weather.main.temp,
@@ -192,7 +193,10 @@ Meteor.methods({
                 });
             });
 
+            var city = Cities.findOne({ cityCode: results.data.city.id });
+
             Forecasts.insert({
+                cityId:     city._id,
                 cityCode:   results.data.city.id,
                 city:       results.data.city.name,
                 list:       forecasts
