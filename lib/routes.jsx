@@ -14,9 +14,7 @@ FlowRouter.route('/main',{
 
 FlowRouter.route('/admin',{
   name: 'Admin', 
-  subscriptions: function(params) {
-    this.register("forecasts", Meteor.subscribe("forecasts"));
-  },
+  
   action(params) {
     ReactLayout.render(MainLayout, { 
       header: <MainHeader />,
@@ -46,11 +44,6 @@ cities.route("/", {
 cities.route('/:cityId',{
   name: 'City', 
 
-  subscriptions: function(params) {
-    this.register("city", Meteor.subscribe("cities"));
-    this.register("currentWeathers", Meteor.subscribe("currentWeathers", { cityId: params.cityId }))
-    this.register("forecasts", Meteor.subscribe("forecasts", { cityId: params.cityId }));
-  },
   action(params) {
 
     ReactLayout.render(MainLayout, { 

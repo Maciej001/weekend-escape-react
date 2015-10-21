@@ -24,11 +24,6 @@ AdminPanel = React.createClass({
     Meteor.call("downloadCurrentWeather");
   },
 
-  printWeather(e) {
-    e.preventDefault();
-    console.log(Forecasts.findOne());
-  },
-
   downloadForecast(e){
     e.preventDefault();
     Meteor.call("downloadForecast");
@@ -60,7 +55,7 @@ AdminPanel = React.createClass({
             </div>  
 
             <div className="admin-row">
-              <h4>Download 16 day forecast</h4>
+              <h4>Download Weather Forecast</h4>
               <button id="download-forecast"
                  className="btn btn-primary"
                  onClick={ this.downloadForecast }> Download</button>

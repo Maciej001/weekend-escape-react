@@ -1,11 +1,12 @@
-Meteor.publish('cities', () => {
+Meteor.publish('forecasts', function() {
+  return Forecasts.find();
+});
+
+Meteor.publish('cities', function () {
   return Cities.find();
 });
 
-Meteor.publish('currentWeathers', () => {
+Meteor.publish('currentWeathers', function() {
   return CurrentWeathers.find();
 });
 
-Meteor.publish('forecasts', () => {
-  return Forecasts.find();
-});

@@ -168,7 +168,7 @@ Meteor.methods({
     let cities = Cities.find();
     let forecastURL = "http://api.openweathermap.org/data/2.5/forecast?id=";
 
-        forecastURL += "6359304" + "&units=metric&appid=" + WEATHER_KEY;
+        forecastURL += "2643743" + "&units=metric&appid=" + WEATHER_KEY;
 
         HTTP.get(forecastURL, function(err, results) {
             if (err) throw new Meteor.Error(err);
