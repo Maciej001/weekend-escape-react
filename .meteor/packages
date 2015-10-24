@@ -26,3 +26,5 @@ kadira:flow-router
 kadira:react-layout
 http
 accounts-password
+russ:weather-icons
+maxharris9:classnames

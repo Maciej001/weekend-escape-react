@@ -2,6 +2,12 @@ City = React.createClass({
   propTypes: {},
   mixins: [ ReactMeteorData ],
 
+  getInitialState() {
+    return {
+      fullInfo: false
+    }
+  },
+
   getMeteorData() {
     Meteor.subscribe("weatherForecasts");
 
@@ -18,30 +24,55 @@ City = React.createClass({
 
       city:             Cities.findOne({ _id: this.props.cityId }),
       cityLoaded:       citySubHandle.ready() 
-     }
+    }
+  },
+
+  changeFullInfo() {
+    this.setState({ fullInfo: ! this.state.fullInfo });
   },
 
   render() {
+    let fullInfoClass = classNames({
+      'glyphicon': true,
+      'glyphicon-circle-arrow-down': this.state.fullInfo,
+      'glyphicon-circle-arrow-right': !this.state.fullInfo
+    });
+
     return (
       <div className="container">
-        { this.data.cityLoaded ?
-          <h1>{ this.data.city.name }</h1>
-          :
-          <h1>Loading...</h1>
-        }
 
-        { this.data.weatherLoaded ?
-          <h2>{ this.data.weather.temp }</h2>
-          :
-          <h2>Weather unknown...</h2>
-        }
+        { this.data.cityLoaded && this.data.weatherLoaded ?
+            <div>
+              
+              <h1 className="city-header">
+                <i className={ fullInfoClass } ref="fullInfo" onClick={ this.changeFullInfo }></i>
+                { this.data.city.name.toUpperCase() }
+                <WeatherIcon icon={ this.data.weather.weatherIcon } />
+                <Temperature temp={ this.data.weather.temp } />
+              </h1>
 
-        { this.data.forecastLoaded ?
-          <h1>{ this.data.forecast.list[0].temp } at { moment(this.data.forecast.list[0].timeDate).format("DD-MM-YY HH:MM") }</h1>
-          :
-          <h1>Forecast loading...</h1>
-        }
+              { this.state.fullInfo ?
+              <h2>
+                <WeatherInfo type="humidity" data={ this.data.weather.humidity } />
+                <WeatherInfo type="pressure" data={ Math.round(this.data.weather.pressure) } />
+                <WeatherInfo type="wind" data={ 10* Math.round(this.data.weather.wind/10) } />
+              </h2>
+              : "" }
 
+
+              <h2>
+                <Sunrise sunrise={ this.data.weather.sunrise } sunset={ this.data.weather.sunset } />
+              </h2>
+
+              <CityImage 
+                image={ this.data.city.name } 
+                imageLink={ "/cities_images/" + this.data.city.name.toLowerCase() + ".jpg" } 
+                size="big" 
+              />
+            </div>
+          :
+            <h1>Loading...</h1>
+        }
         
 
 
