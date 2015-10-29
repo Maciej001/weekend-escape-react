@@ -10,7 +10,7 @@ Table = React.createClass({
 
     let headerNodes = this.props.headers.map( (header) => {
       return (
-        <TableHeaderCell name={ header.name } />
+        <TableHeaderCell name={ header.name } key={ header.dataName } />
       );
     });
 
@@ -24,7 +24,7 @@ Table = React.createClass({
   renderRows() {
     let tableRows = this.props.rows.map( (row) => {
       return (
-        <TableRow row={ row } />
+        <TableRow row={ row } key={ row[0] }/>
       )
     });
 

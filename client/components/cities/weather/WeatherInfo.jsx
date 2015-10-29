@@ -1,7 +1,14 @@
 WeatherInfo = React.createClass({
 
   render() {
-    var text = '', units = '';
+
+    let styleInfo = {
+      display: 'inline-block',
+      width: '85px',
+      fontWeight: 'bold'
+    }
+
+    let text = '', units = '';
     switch (this.props.type) {
       case "humidity":
         text = "Humidity: ";
@@ -18,7 +25,7 @@ WeatherInfo = React.createClass({
     }
     return (
       <div className="weather-info">
-        <span className="weather-info-header">{ text }</span>
+        <span style={ styleInfo } >{ text }</span>
         <span className="weather-info-data">{ this.props.data }</span>
         <span className="weather-info-units">{ units }</span>
       </div>

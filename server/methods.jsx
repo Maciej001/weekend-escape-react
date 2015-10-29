@@ -48,18 +48,34 @@ Meteor.methods({
     Cities.remove({});
 
     _.each(cities_array, (city) => {
-      Cities.insert({
-        cityCode:     city._id,
-        name:         city.name,
-        countryCode:  city.country,
-        coord:        {
-                        lat: city.coord.lat,
-                        lng: city.coord.lon
-                      },
-        zoom:         city.zoom,
-        airportCode:  city.airportCode,
-        image: "cities_images/" + city.name.toLowerCase() + ".jpg"
-      });
+
+        let document = {
+            cityCode:     city._id,
+            name:         city.name,
+            countryCode:  city.country,
+            coord:        {
+                            lat: city.coord.lat,
+                            lng: city.coord.lon
+                          },
+            zoom:         city.zoom,
+            airportCode:  city.airportCode,
+            image: "cities_images/" + city.name.toLowerCase() + ".jpg"
+        }
+
+        check(document, {
+            cityCode:       Number,
+            name:           String,
+            countryCode:    String,
+            coord:          {
+                                lat: Number,
+                                lng: Number
+                              },
+            zoom:           Number,
+            airportCode:    String,
+            image:          String
+        });
+        
+        Cities.insert(document);
     });
   },
 
@@ -89,7 +105,7 @@ Meteor.methods({
             switch(city_weather.weather[0].icon) {
                 case "01d":
                 case "01n":
-                    icon = "day-sunny";
+                    icon = "wi wi-day-sunny";
                     weather_type = 5;
                     break;
                 case "02d":
@@ -135,9 +151,8 @@ Meteor.methods({
             };
 
             // find City._id
-            var city = Cities.findOne({cityCode: city_weather.id});
-
-            CurrentWeathers.insert({
+            let city = Cities.findOne({cityCode: city_weather.id});
+            let document = {
                 cityId:                 city._id,
                 cityCode:               city_weather.id,
                 city:                   city_weather.name,
@@ -155,7 +170,29 @@ Meteor.methods({
                 weatherDescription:     city_weather.weather[0].description,
                 weatherIcon:            icon,
                 weatherType:            weather_type
+            }
+
+            check(document, {
+                cityId:                 String,
+                cityCode:               Number,
+                city:                   String,
+                temp:                   Number,
+                temp_min:               Number,
+                temp_max:               Number,
+                humidity:               Number,
+                pressure:               Number,
+                wind:                   Number,
+                wind_deg:               Number,
+                clouds:                 Number,
+                sunrise:                Number,
+                sunset:                 Number,
+                weatherMain:            String,
+                weatherDescription:     String,
+                weatherIcon:            String,
+                weatherType:            Number
             });
+
+            CurrentWeathers.insert(document);
 
         });
     });

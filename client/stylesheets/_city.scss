@@ -1,3 +1,6 @@
+h1.city-header {
+  margin-bottom: 0;
+}
 .city-header {
   .glyphicon {
     font-size: 2rem;
@@ -28,10 +31,11 @@
   }
 }
 
+.fullInfo {
+  margin-top: 10px;
+}
+
 .weather-info {
-    font-size: 2rem;
-  .weather-info-header {
-    font-weight: bold;
-  }
+    font-size: 1.5rem;
 }
 
